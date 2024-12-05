@@ -1,0 +1,38 @@
+// Aula 2 - Instalações do Agent
+
+https://documentation.wazuh.com/current/installation-guide/wazuh-agent/wazuh-agent-package-windows.html
+
+> NET START Wazuh
+
+"C:\Program Files (x86)\ossec-agent"
+
+# /var/ossec/bin/agent_control -l 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

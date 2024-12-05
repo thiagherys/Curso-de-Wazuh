@@ -1,0 +1,62 @@
+// Aula 8 - Integração do VirusTotal
+
+# vim /var/ossec/etc/ossec.conf
+
+<ossec_config>
+  <integration>
+    <name>virustotal</name>
+    <api_key><YOUR_VIRUS_TOTAL_API_KEY></api_key>
+    <group>syscheck</group>
+    <alert_format>json</alert_format>
+  </integration>
+</ossec_config>
+
+# vim /var/ossec/etc/rules/local_rules.xml
+
+<group name="virustotal,">
+ <rule id="87100" level="10">
+    <decoded_as>json</decoded_as>
+    <field name="integration">virustotal</field>
+    <description>VirusTotal integration messages.</description>
+    <options>no_full_log</options>
+</rule>
+</group>
+
+# systemctl restart wazuh-manager
+
+> Invoke-WebRequest -Uri https://github.com/Mazuco/wazuh/raw/refs/heads/main/mirai -OutFile C:/Users/Administrator/Downloads/mirai
+
+# vim /var/ossec/etc/ossec.conf
+
+<directories check_all="yes" realtime="yes">/root/</directories>
+
+# sudo curl https://raw.githubusercontent.com/Mazuco/wazuh/refs/heads/main/xbash --output /root/Xbash
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

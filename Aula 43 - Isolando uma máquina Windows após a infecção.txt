@@ -1,0 +1,54 @@
+// Aula 3 - Isolando uma máquina Windows após a infecção
+
+> Invoke-WebRequest -Uri https://raw.githubusercontent.com/Mazuco/wazuh/refs/heads/main/fw.cmd -OutFile 'C:\Program Files (x86)\ossec-agent\active-response\bin\'
+
+> Invoke-WebRequest -Uri https://raw.githubusercontent.com/Mazuco/wazuh/refs/heads/main/wfblock.ps1 -OutFile 'C:\Program Files (x86)\ossec-agent\active-response\bin\'
+
+# vim /var/ossec/etc/ossec.conf
+
+<ossec_config>
+<command>
+    <name>windowsfirewall</name>
+    <executable>fw.cmd</executable>
+    <timeout_allowed>yes</timeout_allowed>
+</command>
+
+<active-response>
+   <disabled>no</disabled>
+   <command>windowsfirewall</command>
+   <location>local</location>
+   <rules_id>87105</rules_id>
+   <timeout>60</timeout>
+</active-response>
+</ossec_config>
+
+# systemctl restart wazuh-manager
+
+> Invoke-WebRequest -Uri https://github.com/Mazuco/wazuh/raw/refs/heads/main/mirai -OutFile C:/Users/Administrator/Downloads/mirai
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

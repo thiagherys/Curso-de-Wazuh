@@ -1,0 +1,44 @@
+// Aula 5 - Configurações opcionais
+
+/var/ossec/etc/ossec.conf
+
+C:\Program Files (x86)\ossec-agent\ossec.conf"
+	
+<syscheck>
+   <process_priority>19</process_priority>
+</syscheck>
+	
+"/var/ossec/queue/fim/db"
+
+"C:\Program Files (x86)\ossec-agent\queue\fim\db"
+
+<syscheck>
+   <database>memory</database>
+</syscheck>	
+	
+OU
+
+<syscheck>
+   <database>disk</database>
+</syscheck>
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+
+
+
+
+

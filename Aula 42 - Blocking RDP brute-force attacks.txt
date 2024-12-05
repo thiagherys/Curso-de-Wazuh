@@ -1,0 +1,61 @@
+// Aula 2 - Blocking RDP brute-force attacks
+
+'C:\\Program Files (x86)\\ossec-agent\\ossec.conf'
+
+<command>
+    <name>netsh</name>
+    <executable>netsh.exe</executable>
+    <timeout_allowed>yes</timeout_allowed>
+</command>
+
+<active-response>
+    <disabled>no</disabled>
+    <command>netsh</command>
+    <location>local</location>
+    <rules_id>100900</rules_id>
+</active-response>
+
+# vim /var/ossec/etc/rules/local_rules.xml
+
+<group name="rdp">
+  <rule id="100900" level="10" frequency="3" timeframe="120">
+    <if_matched_sid>60122</if_matched_sid>
+    <description>Possible RDP attack: 3 failed logins in a short period of time</description>
+  </rule>
+</group>
+
+# vim /var/ossec/etc/ossec.conf
+
+<ossec_config>
+<command>
+    <name>netsh</name>
+    <executable>netsh.exe</executable>
+    <timeout_allowed>yes</timeout_allowed>
+</command>
+<active-response>
+    <disabled>no</disabled>
+    <command>netsh</command>
+    <location>local</location>
+    <rules_id>100900</rules_id>
+</active-response>
+</ossec_config>
+
+# systemctl restart wazuh-manager
+
+# hydra -l vitor -P /usr/share/wordlists/rockyou.txt.gz 192.168.15.172 rdp
+
+> netsh advfirewall firewall show rule name='WAZUH ACTIVE RESPONSE BLOCKED IP' dir=in type=dynamic 
+
+
+
+
+
+
+
+
+
+
+
+
+
+

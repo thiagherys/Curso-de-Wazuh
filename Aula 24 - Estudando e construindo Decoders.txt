@@ -1,0 +1,65 @@
+// Aula 2 - Estudando e construindo Decoders
+
+"/var/ossec/etc/decoders"
+
+https://github.com/wazuh/wazuh-ruleset/blob/master/decoders/0050-checkpoint_decoders.xml
+
+https://github.com/wazuh/wazuh-documentation/blob/master/source/user-manual/ruleset/ruleset-xml-syntax/decoders.rst
+
+https://regex101.com/
+
+https://github.com/wazuh/wazuh-documentation/blob/master/source/user-manual/ruleset/ruleset-xml-syntax/regex.rst
+
+# vim /var/ossec/etc/decoders/local_decoder.xml
+
+<decoder name="example">
+  <program_name>^example</program_name>
+</decoder>
+
+<decoder name="example">
+  <parent>example</parent>
+  <regex>User '(\w+)' logged from '(\d+.\d+.\d+.\d+)'</regex>
+  <order>user, srcip</order>
+</decoder>
+
+# /var/ossec/bin/wazuh-logtest
+
+# vim /var/ossec/etc/rules/local_rules.xml
+
+<group name="example,">
+  <!--Generic rule -->
+  <rule id="109001" level="10">
+    <decoded_as>example</decoded_as>
+    <description>Monitoring logging event</description>
+  </rule>
+</group>
+
+# systemctl restart wazuh-manager
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

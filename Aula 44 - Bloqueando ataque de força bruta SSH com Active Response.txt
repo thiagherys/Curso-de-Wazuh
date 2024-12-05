@@ -1,0 +1,45 @@
+// Aula 4 - Bloqueando ataque de força bruta SSH com Active Response
+
+https://github.com/wazuh/wazuh-ruleset/blob/master/rules/0095-sshd_rules.xml
+
+# vim /var/ossec/etc/ossec.conf
+
+<ossec_config>
+<command>
+  <name>firewall-drop</name>
+  <executable>firewall-drop</executable>
+  <timeout_allowed>yes</timeout_allowed>
+</command>
+
+<active-response>
+  <command>firewall-drop</command>
+  <location>local</location>
+  <rules_id>5710</rules_id>
+  <timeout>60</timeout>
+</active-response>
+</ossec_config>
+
+# systemctl restart wazuh-manager
+
+# sudo hydra -l vitor -P /usr/share/wordlists/rockyou.txt.gz 192.168.15.165 ssh
+
+# iptables -L -n
+
+# tail /var/ossec/logs/active-responses.log
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

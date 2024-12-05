@@ -1,0 +1,59 @@
+// Aula 1 - Introdução a seção - Suricata
+
+# sudo dnf install 'dnf-command(copr)'
+
+# sudo dnf copr enable @oisf/suricata-7.0
+
+# dnf install epel-release
+
+# dnf install suricata
+
+# mkdir -p /etc/suricata/rules/
+
+# cd /tmp/ && curl -LO https://rules.emergingthreats.net/open/suricata-7.0.3/emerging.rules.tar.gz
+
+# sudo tar -xvzf emerging.rules.tar.gz && sudo mv rules/*.rules /etc/suricata/rules/
+
+# chown -R suricata:suricata /etc/suricata/rules/*
+
+# sudo chmod 640 /etc/suricata/rules/*.rules
+
+# vim /etc/suricata/suricata.yaml
+
+HOME_NET: "[192.168.15.0/24]"
+EXTERNAL_NET: "any"
+default-rule-path: /etc/suricata/rules
+rule-files:
+  - "*.rules"
+# Linux high speed capture support
+af-packet:
+  - interface: enp0s3
+
+# vim /etc/sysconfig/suricata
+
+OPTIONS="-i enp0s3 --user suricata "
+
+# sudo systemctl restart suricata
+
+# sudo systemctl status suricata
+
+# vim /var/ossec/etc/ossec.conf
+
+<ossec_config>
+...
+  <localfile>
+    <log_format>json</log_format>
+    <location>/var/log/suricata/eve.json</location>
+  </localfile>
+...
+</ossec_config>
+
+# systemctl restart wazuh-agent
+
+# nmap -sS -Pn 192.168.15.165
+
+
+
+
+
+

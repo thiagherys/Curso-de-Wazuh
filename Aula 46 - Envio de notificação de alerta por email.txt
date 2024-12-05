@@ -1,0 +1,85 @@
+// Aula 1 - Envio de notificação de alerta por email
+
+"/var/ossec/logs/alerts/alerts.log"
+ 
+"/var/ossec/logs/alerts/alerts.json"
+
+# dnf install postfix s-nail cyrus-sasl cyrus-sasl-plain
+
+# vim /etc/postfix/main.cf
+
+relayhost = [smtp.mail.yahoo.com]:587
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+smtp_sasl_security_options = noanonymous
+#smtp_tls_CAfile = /etc/ssl/certs/ca-bundle.crt
+smtp_use_tls = yes
+
+# echo [smtp.mail.yahoo.com]:587 vitor.mazuco@yahoo.com.br:kkwmshtkikskmvhr > /etc/postfix/sasl_passwd
+
+# postmap /etc/postfix/sasl_passwd
+
+# chown root:root /etc/postfix/sasl_passwd /etc/postfix/sasl_passwd.db
+
+# chmod 0600 /etc/postfix/sasl_passwd /etc/postfix/sasl_passwd.db
+
+# systemctl enable --now postfix
+
+# echo "Test mail from postfix" | mail -s "Test Postfix" -r "<CONFIGURED_EMAIL>" <RECEIVER_EMAIL>
+
+<global>
+  <email_notification>yes</email_notification>
+  <smtp_server>localhost</smtp_server>
+  <email_from><USERNAME>@gmail.com</email_from>
+  <email_to><RECEIVER_EMAIL></email_to>
+</global>
+
+# vim /var/ossec/etc/ossec.conf
+
+<ossec_config>
+  <alerts>
+    <log_alert_level>3</log_alert_level>
+    <email_alert_level>5</email_alert_level>
+  </alerts>
+</ossec_config>
+
+# systemctl restart wazuh-manager
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,32 @@
+// Aula 2 - Testando ataques baseados na web usando DVWA
+
+# sudo bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/IamCarron/DVWA-Script/main/Install-DVWA.sh)"
+
+http://192.168.15.180/DVWA
+
+http://192.168.15.180/DVWA/vulnerabilities/sqli/?id=a%27%20UNION%20SELECT%22Hello%22,%22Hello%20Again%22;--%20-&Submit=Submit
+
+<script>alert("Hello");</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

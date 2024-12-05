@@ -1,0 +1,50 @@
+// Aula 3 - FIM no Windows
+
+C:\Program Files (x86)\ossec-agent\ossec.conf
+
+<syscheck>
+  <directories realtime="yes"><FILEPATH_OF_MONITORED_DIRECTORY></directories>
+</syscheck>
+
+https://documentation.wazuh.com/current/user-manual/capabilities/file-integrity/basic-settings.html#record-file-attributes
+
+<syscheck>
+
+...
+
+<directories check_all="yes" report_changes="yes" realtime="yes">C:\Windows\System32\teste</directories>
+
+<directories check_all="yes" report_changes="yes" realtime="yes">C:\Users\Administrator\Documents</directories>
+
+...
+
+</syscheck>
+
+# tail -1000 /var/ossec/logs/alerts/alerts.log
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

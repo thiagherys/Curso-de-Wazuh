@@ -1,0 +1,69 @@
+// Aula 7 - Trabalhando com listas CDB
+
+# ls /var/ossec/etc/lists/
+
+https://github.com/Neo23x0/signature-base/blob/master/iocs/hash-iocs.txt
+
+# vim /var/ossec/etc/lists/malware-hashes
+
+e0ec2cd43f71c80d42cd7b0f17802c73:mirai
+55142f1d393c5ba7405239f232a6c059:Xbash
+F71539FDCA0C3D54D29DC3B6F8C30E0D:fanny
+
+# chown wazuh:wazuh /var/ossec/etc/lists/malware-hashes
+
+# chmod 660 /var/ossec/etc/lists/malware-hashes
+
+# vim /var/ossec/etc/ossec.conf
+
+<ruleset>
+ <!-- Default ruleset -->
+ 
+ <list>etc/lists/malware-hashes</list>
+
+<ruleset>
+
+# vim /var/ossec/etc/rules/local_rules.xml
+
+<group name="malware,">
+  <rule id="110002" level="13">
+    <!-- The if_sid tag references the built-in FIM rules -->
+    <if_sid>554, 550</if_sid>
+    <list field="md5" lookup="match_key">etc/lists/malware-hashes</list>
+    <description>File with known malware hash detected: $(file)</description>
+    <mitre>
+      <id>T1204.002</id>
+    </mitre>
+  </rule>
+</group>
+
+# systemctl restart wazuh-manager
+
+<syscheck>
+
+<directories check_all="yes" report_changes="yes" realtime="yes">C:\Users\Administrator\Downloads</directories>
+
+<syscheck>
+
+> Invoke-WebRequest -Uri https://github.com/Mazuco/wazuh/raw/refs/heads/main/mirai -OutFile C:/Users/Administrator/Downloads/mirai
+
+# vim /var/ossec/etc/ossec.conf
+
+<syscheck>
+
+<directories check_all="yes" realtime="yes">/root/</directories>
+
+</syscheck>
+
+# systemctl restart wazuh-agent
+
+# sudo curl https://raw.githubusercontent.com/Mazuco/wazuh/refs/heads/main/xbash --output /root/Xbash
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,43 @@
+// Aula 6 - Windows Registry
+
+Aviso!!!!
+
+!!!!!!Você deve executar isso em um ambiente SEGURO/ISOLADO para fins de estudo e Teste!!!!!!!!!!!!
+
+C:\Program Files (x86)\ossec-agent\ossec.conf
+
+<syscheck>
+  <frequency>300</frequency>
+  <windows_registry arch="both">HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run</windows_registry>
+  <windows_registry arch="both">HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\RunOnce</windows_registry>
+</syscheck>
+
+<syscheck>
+  <windows_registry recursion_level="3">HKEY_LOCAL_MACHINE\SYSTEM\Setup</windows_registry>
+</syscheck>
+
+"report_changes":
+
+<syscheck>
+  <windows_registry  report_changes="yes">HKEY_LOCAL_MACHINE\SYSTEM\Setup</windows_registry>
+</syscheck>
+
+
+<syscheck>
+<windows_registry arch="both">HKEY_LOCAL_MACHINE\SOFTWARE\*</windows_registry>
+</syscheck>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

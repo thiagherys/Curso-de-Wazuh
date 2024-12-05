@@ -1,0 +1,73 @@
+// Aula 4 - Configuração who-data do FIM
+
+"C:\Program Files (x86)\ossec-agent\ossec.conf" 
+
+<syscheck>
+
+<directories check_all="yes" whodata="yes" report_changes="yes">C:\test</directories>
+
+</syscheck>
+
+> mkdir C:\test
+
+RHEL/Rocky
+
+# dnf install audit audispd-plugins
+
+Ubuntu/Debian:
+
+# apt install auditd audispd-plugins
+
+# systemctl restart auditd
+
+# auditctl -l | grep task
+
+# vim /var/ossec/etc/ossec.conf
+
+<syscheck>
+
+   <directories check_all="yes" whodata="yes" report_changes="yes">/etc/hosts.allow</directories>
+   
+</syscheck>
+
+# systemctl restart wazuh-agent
+
+# auditctl -l | grep wazuh_fim
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

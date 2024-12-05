@@ -1,0 +1,54 @@
+// Aula 5 - Uso prático do PCI DSS
+
+https://listings.pcisecuritystandards.org/documents/PCI-DSS-v4_0-PT.pdf
+
+# dnf install audit
+
+# apt install audit
+
+# mkdir /root/credit_cards
+
+# ls -la /root/credit_cards/
+
+# vim /root/credit_cards/cardholder_data.txt
+
+usuario = card4
+
+# vim /var/ossec/etc/ossec.conf
+
+<syscheck>
+
+...
+   <directories check_all="yes" report_changes="yes" realtime="yes" >/root/credit_cards</directories>
+   
+...
+</syscheck>
+
+# systemctl restart wazuh-agent
+
+# auditctl -l | grep wazuh_fim
+
+# auditctl -w /root/credit_cards -p wa -k wazuh_fim
+
+# vim credit_cards/cardholder_data.txt
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,164 @@
+// Aula 3 - Criando uma SCA personalizado
+
+> New-Item "C:\Program Files\testfile.txt" -ItemType File -Value "config_file`nsecond line of configuration`npassword_enabled: yes"
+
+> Get-Content "C:\Program Files\testfile.txt"
+
+> New-Item "C:\Program Files (x86)\ossec-agent\custom-sca-files" -itemType Directory
+
+'C:\Program Files (x86)\ossec-agent\custom-sca-files\keywordcheck.yml'
+
+policy:
+  id: "keyword_check_windows"
+  file: "keywordcheck.yml"
+  name: "SCA use case: Keyword check"
+  description: "Guidance for checking for a keyword or phrase in files on Windows."
+  references:
+    - https://documentation.wazuh.com/current/user-manual/capabilities/sec-config-assessment/index.html
+    - https://documentation.wazuh.com/current/user-manual/capabilities/sec-config-assessment/creating-custom-policies.html
+requirements:
+  title: "Check that the desired file exists on the monitored endpoints"
+  description: "Requirements for running the SCA scans against endpoints with testfile.txt on them."
+  condition: any
+  rules:
+    - 'f:C:\Program Files\testfile.txt'
+checks:
+  - id: 10001
+    title: "Ensure password is disabled in the test configuration file"
+    description: "Password is enabled in the test configuration file."
+    rationale: "Password is considered weak for the custom test application. Threat actors can brute-force your password."
+    remediation: "Disable password by setting the value of the password_enabled option to no."
+    condition: none
+    rules:
+      - 'f:C:\Program Files\testfile.txt -> r:^password_enabled: yes$'
+
+C:\Program Files (x86)\ossec-agent\ossec.conf
+
+<sca>
+  <policies>
+    <policy enabled="yes">C:\Program Files (x86)\ossec-agent\custom-sca-files\keywordcheck.yml</policy>
+  </policies>
+</sca>
+
+> Restart-Service -Name wazuh
+
+> cd "C:\Program Files (x86)\ossec-agent\custom-sca-files"
+
+processcheck.yml
+
+policy:
+  id: "process_check"
+  file: "processcheck.yml"
+  name: "SCA use case to detect running processes"
+  description: "Guidance for checking running PowerShell processes on Windows Server 2022 Standard endpoints."
+  references:
+    - https://documentation.wazuh.com/current/user-manual/capabilities/sec-config-assessment/index.html
+    - https://documentation.wazuh.com/current/user-manual/capabilities/sec-config-assessment/creating-custom-policies.html
+
+requirements:
+  title: "Check that the Windows platform is Windows Server 2022"
+  description: "Requirements to check if it's a Windows Server 2022 machine"
+  condition: all
+  rules:
+    - 'r:HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion -> ProductName -> r:^Windows Server 2022 Standard'
+
+checks:
+  - id: 10004
+    title: "Ensure PowerShell is not running on the endpoint"
+    description: "PowerShell is running on the endpoint."
+    rationale: "PowerShell should be used by only the system administrators. Threat actors can leverage PowerShell for living-off-the-land attacks."
+    remediation: "Disable PowerShell for non-admins."
+    condition: none
+    rules:
+      - 'p:powershell.exe'
+
+C:\Program Files (x86)\ossec-agent\ossec.conf
+
+<sca>
+  <policies>
+    <policy enabled="yes">C:\Program Files (x86)\ossec-agent\custom-sca-files\processcheck.yml</policy>
+  </policies>
+</sca>
+
+> powershell -windowstyle hidden -command Start-Sleep -Seconds 300
+
+> NET STOP Wazuh
+> NET START Wazuh
+
+Linux
+
+# mkdir /var/ossec/etc/custom-sca-files/
+
+# vim /var/ossec/etc/custom-sca-files/processcheck.yml
+
+policy:
+  id: "process_check"
+  file: "processcheck.yml"
+  name: "SCA use case to detect running processes"
+  description: "Guidance for checking running processes on Linux endpoints."
+  references:
+    - https://documentation.wazuh.com/current/user-manual/capabilities/sec-config-assessment/index.html
+    - https://documentation.wazuh.com/current/user-manual/capabilities/sec-config-assessment/creating-custom-policies.html
+
+requirements:
+  title: "Check that the SSH service and password-related files are present on the system"
+  description: "Requirements for running the SCA scan against the Unix based systems policy."
+  condition: any
+  rules:
+    - "f:$sshd_file"
+    - "f:/etc/passwd"
+    - "f:/etc/shadow"
+
+variables:
+  $sshd_file: /etc/ssh/sshd_config
+
+checks:
+  - id: 10003
+    title: "Ensure that netcat is not running on your endpoint"
+    description: "Netcat is running on your endpoint."
+    rationale: "Threat actors can use netcat to open ports on your endpoints or to connect to remote servers."
+    remediation: "Kill the netcat process if confirmed to be malicious after further investigation."
+    condition: none
+    rules:
+      - 'p:nc'
+      - 'p:netcat'
+
+# chown wazuh:wazuh /var/ossec/etc/custom-sca-files/processcheck.yml
+
+# vim /var/ossec/etc/ossec.conf
+
+<sca>
+  <policies>
+    <policy enabled="yes">/var/ossec/etc/custom-sca-files/processcheck.yml</policy>
+  </policies>
+</sca>
+
+Ubuntu:
+
+# apt install netcat
+
+RHEL/Rocky:
+
+# dnf install nc
+
+# nc -l 4444
+
+# systemctl restart wazuh-agent
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

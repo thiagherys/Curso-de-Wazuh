@@ -1,0 +1,50 @@
+// Aula 2 - Coleta de logs do Windows Defender
+
+C:\Program Files (x86)\ossec-agent\ossec.conf
+
+<localfile>
+  <location>Microsoft-Windows-Windows Defender/Operational</location>
+  <log_format>eventchannel</log_format>
+</localfile>
+
+https://www.eicar.org/ 
+
+!!! FAÇA ISSO EM UM AMBIETE SEGURO E SEPARADO DE DEMAIS COMPUTADORES E SERVIDORES !!!
+
+# tail -100 /var/ossec/logs/alerts/alerts.log
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

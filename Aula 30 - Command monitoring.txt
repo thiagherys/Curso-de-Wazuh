@@ -1,0 +1,64 @@
+// Aula 7 - Command monitoring
+
+https://learn.microsoft.com/pt-br/windows-server/administration/windows-commands/netstat
+
+> netstat -a
+
+<ossec_config>
+
+  <localfile>
+    <log_format>full_command</log_format>
+    <command>netstat.exe -a</command>
+    <alias>netstat listening ports</alias>
+    <frequency>360</frequency>
+  </localfile>
+  
+</ossec_config>
+
+# cat /var/ossec/ruleset/rules/0015-ossec_rules.xml
+
+Para Linux:
+
+Ubuntu:
+
+# sudo apt install net-tools
+
+RHEL/Rocky 
+
+# sudo dnf install net-tools
+
+# netstat -tulpn
+
+# vim /var/ossec/etc/ossec.conf
+
+<ossec_config>
+
+  <localfile>
+    <log_format>full_command</log_format>
+    <command>netstat -tulpn</command>
+    <alias>netstat listening ports</alias>
+    <frequency>360</frequency>
+  </localfile>
+  
+</ossec_config>
+
+# systemctl restart wazuh-agent
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
